@@ -7,10 +7,17 @@ buildscript {
     }
 }
 
+//apply plugin: 'application'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+
+//mainClassName = "hello.Application.Main"
+
+/*bootRun {
+    jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+}*/
 
 jar {
     baseName = 'som-rest-service'

@@ -1,6 +1,5 @@
-package gov.michigan.model;
+package gov.michigan.users;
 
-import javax.annotation.Generated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,8 +18,7 @@ public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -32,11 +30,11 @@ public class User {
     private String zipCode;
     private String phoneNumber;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

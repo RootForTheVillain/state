@@ -29,12 +29,7 @@ public class User {
     private String zipCode;
     private String phoneNumber;
 
-    /*@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "users_vehicles",
-            joinColumns = @JoinColumn(name="user_id", referencedColumnName="user_id"),
-            inverseJoinColumns = @JoinColumn(name = "vehicle_id", referencedColumnName="vehicle_id"))*/
-    //@ManyToOne(mappedBy="vehicles")
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name="users_vehicles",
         joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id") },
         inverseJoinColumns = { @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id", unique = true) })

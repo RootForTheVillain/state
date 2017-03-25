@@ -1,24 +1,23 @@
 package gov.michigan.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by bknop on 3/12/2017.
  */
 
 @Entity
-@Table(name = "USERS")
+@Table(name="USERS")
 public class User {
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String firstName;
     private String lastName;
     private String email;
@@ -29,6 +28,23 @@ public class User {
     private String state;
     private String zipCode;
     private String phoneNumber;
+
+    /*@ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "users_vehicles",
+            joinColumns = @JoinColumn(name="user_id", referencedColumnName="user_id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicle_id", referencedColumnName="vehicle_id"))*/
+    //@ManyToOne(mappedBy="vehicles")
+    @OneToMany
+    @JoinTable(name="users_vehicles",
+        joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id") },
+        inverseJoinColumns = { @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id", unique = true) })
+    private Set<Vehicle> vehicles = new HashSet<Vehicle>();
+
+    public Set<Vehicle> getVehicles() { return this.vehicles; }
+
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
 
     public Integer getId() {
         return id;

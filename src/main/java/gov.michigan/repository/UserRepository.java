@@ -15,8 +15,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    List<User> findByLastName(@Param("lastName") String lastName);
+    //List<User> findByLastName(@Param("lastName") String lastName);
 
-    Set<Vehicle> getVehiclesForUser(@Param("id") int id);
+    //Set<Vehicle> getVehiclesForUser(@Param("id") int id);
 
 }

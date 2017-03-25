@@ -31,8 +31,8 @@ public class UserController {
         return userService.findAll();
     }
 
-    @RequestMapping(path="users/{id}/vehicles", method=RequestMethod.GET)
+    /*@RequestMapping(path="users/{id}/vehicles", method=RequestMethod.GET)
     public @ResponseBody Set<Vehicle> getVehiclesForUser(@PathVariable("id") int id) {
         return userService.findVehiclesById(id);
-    }
+    }*/
 }

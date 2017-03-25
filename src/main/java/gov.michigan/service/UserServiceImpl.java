@@ -50,9 +50,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.findOne(id);
     }
 
-    @Override
+    /*@Override
     @Transactional
     public Set<Vehicle> findVehiclesById(int id) {
         return userRepository.getVehiclesForUser(id);
-    }
+    }*/
 }

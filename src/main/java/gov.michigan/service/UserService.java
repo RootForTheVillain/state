@@ -16,6 +16,6 @@ public interface UserService {
     public List<User> findAll();
     public void update(User user);
     public User findById(int id);
-    public Set<Vehicle> findVehiclesById(int id);
+    //public Set<Vehicle> findVehiclesById(int id);
 
 }

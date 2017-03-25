@@ -14,9 +14,15 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    /*private String make;
-    private String model;
-    private String vehicle_type;*/
+    @OneToOne
+    @JoinColumn(name = "MAKE_ID")
+    private Make make;
+
+    @OneToOne
+    @JoinColumn(name = "MODEL_ID")
+    private Model model;
+
+    /*private String vehicle_type;*/
     private String plateNumber;
     private Date plateExpiration;
 
@@ -26,21 +32,21 @@ public class Vehicle {
 
     public void setId(Integer id) { this.id = id; }
 
-    /*public String getMake() {
-        return make;
+    public Make getMake() {
+        return this.make;
     }
 
-    public void setMake(String make) {
+    public void setVehicleMake(Make make) {
         this.make = make;
     }
 
-    public String getModel() {
+    public Model getModel() {
         return model;
     }
 
-    public void setModel(String model) {
+    public void setModel(Model model) {
         this.model = model;
-    }*/
+    }
 
     public String getPlateNumber() {
         return plateNumber;

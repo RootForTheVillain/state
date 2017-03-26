@@ -36,7 +36,7 @@ public class Vehicle {
         return this.make;
     }
 
-    public void setVehicleMake(Make make) {
+    public void setMake(Make make) {
         this.make = make;
     }
 

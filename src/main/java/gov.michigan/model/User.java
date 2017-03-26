@@ -2,7 +2,6 @@ package gov.michigan.model;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,10 +28,11 @@ public class User {
     private String zipCode;
     private String phoneNumber;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(name="users_vehicles",
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    /*@JoinTable(name="users_vehicles",
         joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id") },
-        inverseJoinColumns = { @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id", unique = true) })
+        inverseJoinColumns = { @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id", unique = true) })*/
     private Set<Vehicle> vehicles = new HashSet<Vehicle>();
 
     public Set<Vehicle> getVehicles() { return this.vehicles; }

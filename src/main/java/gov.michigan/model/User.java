@@ -28,12 +28,12 @@ public class User {
     private String zipCode;
     private String phoneNumber;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     /*@JoinTable(name="users_vehicles",
         joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id") },
         inverseJoinColumns = { @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id", unique = true) })*/
-    private Set<Vehicle> vehicles = new HashSet<Vehicle>();
+    private Set<Vehicle> vehicles = new HashSet<>();
 
     public Set<Vehicle> getVehicles() { return this.vehicles; }
 

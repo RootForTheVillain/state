@@ -1,5 +1,12 @@
 package gov.michigan.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.Criteria;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.Filters;
+import org.hibernate.annotations.ParamDef;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +27,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
     private String birthDate;
     private String licenseNumber;
     private String streetAddress;
@@ -28,11 +36,9 @@ public class User {
     private String zipCode;
     private String phoneNumber;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    /*@JoinTable(name="users_vehicles",
-        joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "user_id") },
-        inverseJoinColumns = { @JoinColumn(name = "vehicle_id", referencedColumnName = "vehicle_id", unique = true) })*/
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "user")
+    //@JoinColumn(name = "user_id")
+    @JsonManagedReference
     private Set<Vehicle> vehicles = new HashSet<>();
 
     public Set<Vehicle> getVehicles() { return this.vehicles; }
@@ -71,6 +77,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getBirthDate() {

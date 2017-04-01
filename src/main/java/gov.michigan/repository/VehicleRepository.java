@@ -12,10 +12,12 @@ import org.springframework.data.jpa.repository.Query;
 /**
  * Created by bknop on 3/13/2017.
  */
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
     //List<User> findByLastName(@Param("lastName") String lastName);
 
-    User findByEmailAndPassword(String email, String password);
+    //Set<Vehicle> findVehicleByPlateExpirationBetween(Date start, Date end);
+    //Set<Vehicle> findVehicleByPlateNumber(String plateNumber);
+    Set<Vehicle> findVehicleByPlateExpirationGreaterThanEqualAndPlateExpirationLessThanEqual(Date start, Date end);
 
 }

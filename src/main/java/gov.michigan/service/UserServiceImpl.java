@@ -4,12 +4,14 @@ import gov.michigan.model.User;
 import gov.michigan.model.Vehicle;
 import gov.michigan.repository.UserRepository;
 
+/*import org.joda.time.DateTime;
+import org.joda.time.Days;*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by bknop on 3/14/2017.
@@ -50,9 +52,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findOne(id);
     }
 
-    /*@Override
-    @Transactional
-    public Set<Vehicle> findVehiclesById(int id) {
-        return userRepository.getVehiclesForUser(id);
-    }*/
+    @Override
+    public User findOneByEmailAndPassword(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password);
+    }
 }

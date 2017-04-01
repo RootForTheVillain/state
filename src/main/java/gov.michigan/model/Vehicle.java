@@ -1,5 +1,8 @@
 package gov.michigan.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -14,6 +17,12 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    //@ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
+
     @OneToOne
     @JoinColumn(name = "MAKE_ID")
     private Make make;
@@ -22,7 +31,6 @@ public class Vehicle {
     @JoinColumn(name = "MODEL_ID")
     private Model model;
 
-    /*private String vehicle_type;*/
     private String plateNumber;
     private Date plateExpiration;
 
@@ -56,11 +64,20 @@ public class Vehicle {
         this.plateNumber = plateNumber;
     }
 
+    @Temporal(TemporalType.DATE)
     public Date getPlateExpiration() {
         return plateExpiration;
     }
 
     public void setPlateExpiration(Date plateExpiration) {
         this.plateExpiration = plateExpiration;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -30,6 +30,6 @@ public class VehicleServiceImpl implements VehicleService {
     @Transactional
     public Set<Vehicle> findByPlateExpirationBetween(int id, Date start, Date end) {
         return vehicleRepository
-                .findVehicleByPlateExpirationGreaterThanEqualAndPlateExpirationLessThanEqual(start, end);
+                .findVehicleByUserIdAndPlateExpirationGreaterThanEqualAndPlateExpirationLessThanEqual(id, start, end);
     }
 }

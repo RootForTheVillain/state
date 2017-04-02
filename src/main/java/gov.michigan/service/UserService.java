@@ -17,5 +17,5 @@ public interface UserService {
     public List<User> findAll();
     public void update(User user);
     public User findById(int id);
-    public User findOneByEmailAndPassword(String email, String password);
+    public User findByEmailAndPassword(String email, String password);
 }

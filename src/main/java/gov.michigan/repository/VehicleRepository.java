@@ -14,10 +14,6 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
-    //List<User> findByLastName(@Param("lastName") String lastName);
-
-    //Set<Vehicle> findVehicleByPlateExpirationBetween(Date start, Date end);
-    //Set<Vehicle> findVehicleByPlateNumber(String plateNumber);
-    Set<Vehicle> findVehicleByPlateExpirationGreaterThanEqualAndPlateExpirationLessThanEqual(Date start, Date end);
+    Set<Vehicle> findVehicleByUserIdAndPlateExpirationGreaterThanEqualAndPlateExpirationLessThanEqual(int id, Date start, Date end);
 
 }

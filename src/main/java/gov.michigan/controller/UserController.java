@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping(path = "login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody ResponseEntity<User> authenticate(@RequestBody Map<String, String> creds) {
 
-        User u = userService.findOneByEmailAndPassword(creds.get("email"), creds.get("password"));
+        User u = userService.findByEmailAndPassword(creds.get("email"), creds.get("password"));
         if (u != null) {
             return new ResponseEntity(u, HttpStatus.CREATED);
         }

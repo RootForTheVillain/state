@@ -3,6 +3,7 @@ package gov.michigan.controller;
 import java.net.URI;
 import java.util.*;
 
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -41,21 +42,41 @@ public class UserController {
     }
 
     @GetMapping(path="{id}/vehicles/{year}/{month}")
-    public @ResponseBody Set<Vehicle> getVehicleRenewals(
+    public @ResponseBody Set<Vehicle> getVehicleRenewalsByMonth(
+            @PathVariable("id") int id,
+            @PathVariable("year") int year,
+            @PathVariable("month") int month,
+            @RequestParam(required = false, value = "monthToEnd") String monthToEnd) {
+
+        LocalDate dt2;
+        LocalDate dt1 = new LocalDate(year, month + 1, 1).withDayOfMonth(1);
+
+        if (monthToEnd != null) {
+            int monthOfYear = Integer.parseInt(monthToEnd);
+            dt2 = new LocalDate(year, monthOfYear + 1, 1);
+        } else {
+            dt2 = dt1.plusMonths(1).withDayOfMonth(1).minusDays(1);
+        }
+
+        Date start = dt1.toDateTimeAtStartOfDay().toDate();
+        Date end = dt2.toDateTimeAtStartOfDay().toDate();
+
+        return vehicleService.findByPlateExpirationBetween(id, start, end);
+    }
+
+    /*@GetMapping(path="{id}/vehicles/{year}/{month}")
+    public @ResponseBody Set<Vehicle> getUpcomingVehicleRenewals(
             @PathVariable("id") int id,
             @PathVariable("year") int year,
             @PathVariable("month") int month) {
 
-        Date start = new Date();
-        Date end = new Date();
-        Calendar c = Calendar.getInstance();
-        c.set(year, month, start.getDate());
-        start = c.getTime();
-        c.add(Calendar.DATE, 32);  // number of days to add;
-        end = c.getTime();
+        LocalDate dt1 = new LocalDate(year, month + 1, 1).withDayOfMonth(1);
+        LocalDate dt2 = dt1.plusMonths(1).withDayOfMonth(1).minusDays(1);
+        Date start = dt1.toDateTimeAtStartOfDay().toDate();
+        Date end = dt2.toDateTimeAtStartOfDay().toDate();
 
         return vehicleService.findByPlateExpirationBetween(id, start, end);
-    }
+    }*/
 
     @GetMapping(path="{id}")
     public @ResponseBody User getUserById(@PathVariable("id") int id) {

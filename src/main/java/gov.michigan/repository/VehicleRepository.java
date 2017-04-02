@@ -6,6 +6,7 @@ import java.util.Set;
 import gov.michigan.model.User;
 import gov.michigan.model.Vehicle;
 //import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
 
-    Set<Vehicle> findVehicleByUserIdAndPlateExpirationGreaterThanEqualAndPlateExpirationLessThanEqual(int id, Date start, Date end);
+    Set<Vehicle> findVehicleByUserIdAndPlateExpirationGreaterThanEqualAndPlateExpirationLessThanEqual(
+            int id, Date start, Date end);
 
 }

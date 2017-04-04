@@ -3,6 +3,7 @@ package gov.michigan.controller;
 import java.net.URI;
 import java.util.*;
 
+import io.swagger.annotations.ResponseHeader;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +18,14 @@ import gov.michigan.service.UserService;
 import gov.michigan.service.VehicleService;
 
 import javax.print.attribute.standard.Media;
+import javax.websocket.server.PathParam;
 
 /**
  * Created by bknop on 3/12/2017.
  */
 @CrossOrigin
 @RestController
-@RequestMapping(path="rest/users*")
+@RequestMapping(path="rest/*", consumes = "application/vnd.michigan.v1+json")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -31,8 +33,14 @@ public class UserController {
     @Autowired
     private VehicleService vehicleService;
 
-    @PostMapping(path = "login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<User> authenticate(@RequestBody Map<String, String> creds) {
+    private enum ApiVersion {
+        v1,
+        v2
+    };
+
+    @ResponseBody
+    @PostMapping(path = "login")
+    public ResponseEntity<User> authenticate(@RequestBody Map<String, String> creds) {
 
         User u = userService.findByEmailAndPassword(creds.get("email"), creds.get("password"));
         if (u != null) {
@@ -41,7 +49,19 @@ public class UserController {
         return new ResponseEntity(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(path="{id}/vehicles/{year}/{month}")
+    @ResponseBody
+    @PostMapping(path = "{v1}/login")
+    public ResponseEntity<User> authenticate(@RequestBody Map<String, String> creds,
+                                             @PathVariable final ApiVersion version) {
+
+        User u = userService.findByEmailAndPassword(creds.get("email"), creds.get("password"));
+        if (u != null) {
+            return new ResponseEntity(u, HttpStatus.CREATED);
+        }
+        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(path="users/{id}/vehicles/{year}/{month}")
     public @ResponseBody Set<Vehicle> getVehicleRenewalsByMonth(
             @PathVariable("id") int id,
             @PathVariable("year") int year,
@@ -64,27 +84,19 @@ public class UserController {
         return vehicleService.findByPlateExpirationBetween(id, start, end);
     }
 
-    /*@GetMapping(path="{id}/vehicles/{year}/{month}")
-    public @ResponseBody Set<Vehicle> getUpcomingVehicleRenewals(
-            @PathVariable("id") int id,
-            @PathVariable("year") int year,
-            @PathVariable("month") int month) {
-
-        LocalDate dt1 = new LocalDate(year, month + 1, 1).withDayOfMonth(1);
-        LocalDate dt2 = dt1.plusMonths(1).withDayOfMonth(1).minusDays(1);
-        Date start = dt1.toDateTimeAtStartOfDay().toDate();
-        Date end = dt2.toDateTimeAtStartOfDay().toDate();
-
-        return vehicleService.findByPlateExpirationBetween(id, start, end);
-    }*/
-
-    @GetMapping(path="{id}")
+    @GetMapping(path="users/{id}")
     public @ResponseBody User getUserById(@PathVariable("id") int id) {
         return userService.findById(id);
     }
 
-    @GetMapping
+    @GetMapping(path="users")
     public @ResponseBody List<User> getAllUsers() {
+        return userService.findAll();
+    }
+
+    @GetMapping(path="{version}/users")
+    @ResponseBody
+    public List<User> getAllUsers(@PathVariable final ApiVersion version) {
         return userService.findAll();
     }
 
